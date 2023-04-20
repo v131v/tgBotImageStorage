@@ -11,7 +11,7 @@ func New(storagePath string) *LoaderService {
 }
 
 func (ls *LoaderService) Get(dirName string) (filePaths []string, err error) {
-	dirPath := ls.storagePath + dirName
+	dirPath := ls.storagePath + dirName + "\\"
 	dirFile, err := os.Open(dirPath)
 	if err != nil {
 		return
@@ -25,7 +25,8 @@ func (ls *LoaderService) Get(dirName string) (filePaths []string, err error) {
 	}
 
 	for _, fileInfo := range filesInfo {
-		filePaths = append(filePaths, fileInfo.Name())
+		filePath := dirPath + fileInfo.Name()
+		filePaths = append(filePaths, filePath)
 	}
 	return
 }
