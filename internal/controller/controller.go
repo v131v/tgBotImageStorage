@@ -14,7 +14,7 @@ func New() Controller {
 	return Controller{}
 }
 
-func (c Controller) HandleMessage(msg tgbotapi.Message) (*tgbotapi.MediaGroupConfig, *tgbotapi.MessageConfig) {
+func (c Controller) HandleMessage(msg tgbotapi.Message) tgbotapi.Chattable {
 	groupName := msg.CommandArguments()
 
 	switch msg.Command() {
@@ -22,7 +22,7 @@ func (c Controller) HandleMessage(msg tgbotapi.Message) (*tgbotapi.MediaGroupCon
 		fileNames, err := loader.Load(groupName)
 		if err != nil {
 			errMsg := tgbotapi.NewMessage(msg.Chat.ID, string(err))
-			return nil, &errMsg
+			return errMsg
 		}
 
 		photos := []any{}
@@ -32,10 +32,10 @@ func (c Controller) HandleMessage(msg tgbotapi.Message) (*tgbotapi.MediaGroupCon
 		}
 
 		group := tgbotapi.NewMediaGroup(msg.Chat.ID, photos)
-		return &group, nil
+		return group
 
 	default:
 		errMsg := tgbotapi.NewMessage(msg.Chat.ID, "Undefined command")
-		return nil, &errMsg
+		return errMsg
 	}
 }
