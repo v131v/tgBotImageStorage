@@ -1,17 +1,17 @@
 package server
 
 import (
-	"tgbotimgstor/internal/service"
+	"tgbotimgstor/internal/controller"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 type Server struct {
 	bot  *tgbotapi.BotAPI
-	ctrl *service.Controller
+	ctrl *controller.Controller
 }
 
-func New(ctrl *service.Controller, token string) (s Server, err error) {
+func New(ctrl *controller.Controller, token string) (s Server, err error) {
 	s.bot, err = tgbotapi.NewBotAPI(token)
 	if err != nil {
 		return
@@ -32,7 +32,7 @@ func (s *Server) Run() {
 			continue
 		}
 
-		resp := s.ctrl.HandleMessage(update.Message)
+		resp := (*s.ctrl).HandleMessage(update.Message)
 		s.bot.Send(resp)
 	}
 }
