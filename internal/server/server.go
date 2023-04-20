@@ -8,10 +8,10 @@ import (
 
 type Server struct {
 	bot  *tgbotapi.BotAPI
-	ctrl *controller.Controller
+	ctrl controller.Controller
 }
 
-func New(ctrl *controller.Controller, token string) (s Server, err error) {
+func New(ctrl controller.Controller, token string) (s Server, err error) {
 	s.bot, err = tgbotapi.NewBotAPI(token)
 	if err != nil {
 		return
@@ -32,7 +32,7 @@ func (s *Server) Run() {
 			continue
 		}
 
-		resp := (*s.ctrl).HandleMessage(update.Message)
+		resp := s.ctrl.HandleMessage(update.Message)
 		s.bot.Send(resp)
 	}
 }

@@ -1,4 +1,4 @@
-package commandscontroller
+package commands
 
 import (
 	"tgbotimgstor/internal/service"
@@ -7,19 +7,19 @@ import (
 )
 
 type CommandsController struct {
-	service *service.Service
+	service service.Service
 }
 
-func New(service *service.Service) CommandsController {
-	return CommandsController{service}
+func New(service service.Service) *CommandsController {
+	return &CommandsController{service}
 }
 
-func (c CommandsController) HandleMessage(msg *tgbotapi.Message) tgbotapi.Chattable {
+func (c *CommandsController) HandleMessage(msg *tgbotapi.Message) tgbotapi.Chattable {
 	groupName := msg.CommandArguments()
 
 	switch msg.Command() {
 	case "load":
-		fileNames, err := (*c.service).Get(groupName)
+		fileNames, err := c.service.Get(groupName)
 		if err != nil {
 			errMsg := tgbotapi.NewMessage(msg.Chat.ID, err.Error())
 			return errMsg
