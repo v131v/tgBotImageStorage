@@ -1,17 +1,17 @@
 package server
 
 import (
-	"tgbotimgstor/internal/controller"
+	"tgbotimgstor/internal/service"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 type Server struct {
 	bot  *tgbotapi.BotAPI
-	ctrl *controller.Controller
+	ctrl *service.Controller
 }
 
-func New(ctrl *controller.Controller, token string) (s Server, err error) {
+func New(ctrl *service.Controller, token string) (s Server, err error) {
 	s.bot, err = tgbotapi.NewBotAPI(token)
 	if err != nil {
 		return
