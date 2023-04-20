@@ -19,9 +19,9 @@ func (c Commands) HandleMessage(msg *tgbotapi.Message) tgbotapi.Chattable {
 
 	switch msg.Command() {
 	case "load":
-		fileNames, err := c.service.Get(groupName)
+		fileNames, err := (*c.service).Get(groupName)
 		if err != nil {
-			errMsg := tgbotapi.NewMessage(msg.Chat.ID, string(err))
+			errMsg := tgbotapi.NewMessage(msg.Chat.ID, err.Error())
 			return errMsg
 		}
 
