@@ -1,4 +1,4 @@
-package controller
+package commandscontroller
 
 import (
 	"tgbotimgstor/internal/service"
@@ -6,15 +6,15 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-type Commands struct {
+type CommandsController struct {
 	service *service.Service
 }
 
-func New(service *service.Service) Commands {
-	return Commands{service}
+func New(service *service.Service) CommandsController {
+	return CommandsController{service}
 }
 
-func (c Commands) HandleMessage(msg *tgbotapi.Message) tgbotapi.Chattable {
+func (c CommandsController) HandleMessage(msg *tgbotapi.Message) tgbotapi.Chattable {
 	groupName := msg.CommandArguments()
 
 	switch msg.Command() {
