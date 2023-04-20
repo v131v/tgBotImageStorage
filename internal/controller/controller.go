@@ -33,5 +33,9 @@ func (c Controller) HandleMessage(msg tgbotapi.Message) (*tgbotapi.MediaGroupCon
 
 		group := tgbotapi.NewMediaGroup(msg.Chat.ID, photos)
 		return &group, nil
+
+	default:
+		errMsg := tgbotapi.NewMessage(msg.Chat.ID, "Undefined command")
+		return nil, &errMsg
 	}
 }
