@@ -7,19 +7,19 @@ import (
 )
 
 type Controller struct {
-	loader loader.LoadService
+	loader *loader.Loader
 }
 
-func New() Controller {
-	return Controller{}
+func New(loader *loader.Loader) Controller {
+	return Controller{loader}
 }
 
-func (c Controller) HandleMessage(msg tgbotapi.Message) tgbotapi.Chattable {
+func (c Controller) HandleMessage(msg *tgbotapi.Message) tgbotapi.Chattable {
 	groupName := msg.CommandArguments()
 
 	switch msg.Command() {
 	case "load":
-		fileNames, err := loader.Load(groupName)
+		fileNames, err := loader.Get(groupName)
 		if err != nil {
 			errMsg := tgbotapi.NewMessage(msg.Chat.ID, string(err))
 			return errMsg
